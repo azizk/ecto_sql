@@ -569,6 +569,11 @@ if Code.ensure_loaded?(Postgrex) do
        interval(count, interval, sources, query) | ")::date"]
     end
 
+    defp expr({:json_extract_path, _, [expr, path]}, sources, query) do
+      path = Enum.map_intersperse(path, ",", &to_string/1)
+      [?(, expr(expr, sources, query), "#>'{", path, "}')"]
+    end
+
     defp expr({:filter, _, [agg, filter]}, sources, query) do
       aggregate = expr(agg, sources, query)
       [aggregate, " FILTER (WHERE ", expr(filter, sources, query), ?)]
