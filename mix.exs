@@ -68,7 +68,8 @@ defmodule EctoSQL.MixProject do
     if path = System.get_env("ECTO_PATH") do
       {:ecto, path: path}
     else
-      {:ecto, "~> 3.4 or ~> 3.3.2"}
+      # {:ecto, "~> 3.4 or ~> 3.3.2"}
+      {:ecto, github: "elixir-ecto/ecto", branch: "wm-json-extract-path"}
     end
   end
 
