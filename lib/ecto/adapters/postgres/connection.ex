@@ -570,7 +570,11 @@ if Code.ensure_loaded?(Postgrex) do
     end
 
     defp expr({:json_extract_path, _, [expr, path]}, sources, query) do
-      path = Enum.map_intersperse(path, ",", &to_string/1)
+      path =
+        path
+        |> Enum.map(&to_string/1)
+        |> Enum.intersperse(",")
+
       [?(, expr(expr, sources, query), "#>'{", path, "}')"]
     end
 
