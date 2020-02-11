@@ -988,8 +988,7 @@ if Code.ensure_loaded?(MyXQL) do
 
     defp escape_json_key(value) when is_binary(value) do
       value
-      |> :binary.replace("'", "''", [:global])
-      |> :binary.replace("\\", "\\\\", [:global])
+      |> escape_string()
       |> :binary.replace("\"", "\\\\\"", [:global])
     end
 

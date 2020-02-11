@@ -1161,7 +1161,7 @@ if Code.ensure_loaded?(Postgrex) do
 
     defp escape_json_key(value) when is_binary(value) do
       value
-      |> :binary.replace("'", "''", [:global])
+      |> escape_string()
       |> :binary.replace("\"", "\\\"", [:global])
     end
 
