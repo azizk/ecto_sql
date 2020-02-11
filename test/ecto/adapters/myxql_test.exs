@@ -500,7 +500,7 @@ defmodule Ecto.Adapters.MyXQLTest do
     assert all(query) == ~s{SELECT json_extract(s0, '$."''a"') FROM `schema` AS s0}
 
     query = Schema |> select([r], json_extract_path(r, ["\"a"])) |> plan()
-    assert all(query) == ~s{SELECT json_extract(s0, '$."\\\\\"a"') FROM `schema` AS s0}
+    assert all(query) == ~s{SELECT json_extract(s0, '$."\\\\"a"') FROM `schema` AS s0}
   end
 
   test "nested expressions" do
