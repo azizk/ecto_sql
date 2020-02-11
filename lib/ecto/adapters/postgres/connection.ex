@@ -573,7 +573,7 @@ if Code.ensure_loaded?(Postgrex) do
       path =
         intersperse_map(path, ?,, fn
           binary when is_binary(binary) ->
-            escape_json_key(binary)
+            [?", escape_json_key(binary), ?"]
 
           integer when is_integer(integer) ->
             Integer.to_string(integer)
