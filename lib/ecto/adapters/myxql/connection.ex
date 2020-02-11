@@ -555,7 +555,7 @@ if Code.ensure_loaded?(MyXQL) do
       path =
         Enum.map(path, fn
           binary when is_binary(binary) ->
-            [".", binary]
+            [?., ?", escape_string(binary), ?"]
 
           integer when is_integer(integer) ->
             "[#{integer}]"
