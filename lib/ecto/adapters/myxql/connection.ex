@@ -555,7 +555,7 @@ if Code.ensure_loaded?(MyXQL) do
       path =
         Enum.map(path, fn
           binary when is_binary(binary) ->
-            [?., ?", escape_string(binary), ?"]
+            [?., ?", escape_json_key(binary), ?"]
 
           integer when is_integer(integer) ->
             "[#{integer}]"
@@ -984,6 +984,13 @@ if Code.ensure_loaded?(MyXQL) do
       value
       |> :binary.replace("'", "''", [:global])
       |> :binary.replace("\\", "\\\\", [:global])
+    end
+
+    defp escape_json_key(value) when is_binary(value) do
+      value
+      |> :binary.replace("'", "''", [:global])
+      |> :binary.replace("\\", "\\\\", [:global])
+      |> :binary.replace("\"", "\\\\\"", [:global])
     end
 
     defp ecto_cast_to_db(:id, _query), do: "unsigned"

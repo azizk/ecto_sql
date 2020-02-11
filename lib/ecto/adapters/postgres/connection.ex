@@ -573,7 +573,7 @@ if Code.ensure_loaded?(Postgrex) do
       path =
         intersperse_map(path, ?,, fn
           binary when is_binary(binary) ->
-            escape_string(binary)
+            escape_json_key(binary)
 
           integer when is_integer(integer) ->
             Integer.to_string(integer)
@@ -1157,6 +1157,12 @@ if Code.ensure_loaded?(Postgrex) do
 
     defp escape_string(value) when is_binary(value) do
       :binary.replace(value, "'", "''", [:global])
+    end
+
+    defp escape_json_key(value) when is_binary(value) do
+      value
+      |> :binary.replace("'", "''", [:global])
+      |> :binary.replace("\"", "\\\"", [:global])
     end
 
     defp ecto_to_db({:array, t}),          do: [ecto_to_db(t), ?[, ?]]
